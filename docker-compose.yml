@@ -1,0 +1,13 @@
+version: '3'
+services:
+  minecraft:
+    container_name: "Minecraft"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "25565:25565"
+    labels:
+      image.description: "Minecraft Server Container"
+    # volumes:
+    #   - ./world:/usr/local/minecraft/world
