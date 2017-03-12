@@ -11,7 +11,5 @@ services:
       EULA: "TRUE"
     labels:
       image.description: "Minecraft Server Container"
-#     volumes:
-#       - "world:./world"
-# volumes:
-#   world:
+    volumes:
+      - /Users/RyanMBP/Developer/minecraft-server/world:/usr/local/minecraft/world
