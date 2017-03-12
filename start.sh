@@ -1,5 +1,12 @@
 #!/bin/sh
-# Accept EULA
-echo eula=true > eula.txt
+if [ ! -f "eula.txt" ]; then
+    echo "# Generated via Docker on $(date)" > eula.txt
+    echo "eula=$EULA" >> eula.txt
+fi
 
-java -Xms1G -Xmx1G -jar /usr/local/minecraft/minecraft_server.jar nogui
+MANAGE_SCRIPT="/usr/local/minecraft/bin/manage.sh"
+[ ! -x "${MANAGE_SCRIPT}" ] && echo "${MANAGE_SCRIPT} is not executable" && exit 1
+
+"${MANAGE_SCRIPT}" -u
+
+tail -f /dev/null
