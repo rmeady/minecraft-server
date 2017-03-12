@@ -12,6 +12,10 @@ function minecraft_pid {
 }
 
 function start {
+    if [ ! -f "eula.txt" ]; then
+        echo "# Generated via Docker on $(date)" > eula.txt
+        echo "eula=$EULA" >> eula.txt
+    fi
     echo "$(date) - Starting Server"
     local minecraft_pid=$(minecraft_pid)
     [ -n "${minecraft_pid}" ] && echo "Minecraft server is already running" && return 0
@@ -36,8 +40,18 @@ function console {
     bash -c "screen -p 0 -X eval 'stuff \"$1\"\015'"
 }
 
-while getopts "udrm:c:" opt; do
+function install_forge {
+    local forge_dir="/usr/local/minecraft/forge"
+    local forge_jar=$(find /usr/local/minecraft/forge -type f -name "*.jar")
+    [ ! -f "${forge_jar}" ] && echo "Unable to find forge jar" && return 1
+    java -jar "${forge_jar}" --installServer
+}
+
+while getopts "fudrm:c:" opt; do
     case "${opt}" in
+    "f")
+        install_forge
+        ;;
     "u")
         start
         ;;

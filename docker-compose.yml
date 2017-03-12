@@ -12,4 +12,5 @@ services:
     labels:
       image.description: "Minecraft Server Container"
     volumes:
-      - /Users/RyanMBP/Developer/minecraft-server/world:/usr/local/minecraft/world
+      - ${CURRENT_DIRECTORY}/world:/usr/local/minecraft/world
+      - ${CURRENT_DIRECTORY}/forge/mods:/usr/local/minecraft/forge/mods
